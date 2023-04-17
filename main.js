@@ -21,7 +21,11 @@ function handleClick(e) {
   modal.classList.add("hidden");
 
   mimicServerCall()
-    .then((res) => e.target.classList.toggle("activated-heart"))
+    .then((res) => {
+      e.target.textContent =
+        e.target.textContent === FULL_HEART ? EMPTY_HEART : FULL_HEART;
+      e.target.classList.toggle("activated-heart");
+    })
     .catch((err) => {
       const message = modal.querySelector("p#modal-message");
       message.textContent = err;
