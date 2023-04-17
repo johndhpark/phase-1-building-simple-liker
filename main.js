@@ -16,20 +16,18 @@ document.addEventListener("DOMContentLoaded", (e) => {
   });
 });
 
-async function handleClick(e) {
+function handleClick(e) {
   clearTimeout(timeoutID);
   modal.classList.add("hidden");
 
-  try {
-    const res = await mimicServerCall();
-
-    e.target.classList.toggle("activated-heart");
-  } catch (err) {
-    const message = modal.querySelector("p#modal-message");
-    message.textContent = err;
-    modal.classList.remove("hidden");
-    timeoutID = setTimeout(() => modal.classList.add("hidden"), 3000);
-  }
+  mimicServerCall()
+    .then((res) => e.target.classList.toggle("activated-heart"))
+    .catch((err) => {
+      const message = modal.querySelector("p#modal-message");
+      message.textContent = err;
+      modal.classList.remove("hidden");
+      timeoutID = setTimeout(() => modal.classList.add("hidden"), 3000);
+    });
 }
 
 //------------------------------------------------------------------------------
